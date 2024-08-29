@@ -1,0 +1,29 @@
+﻿The Egg of Fortune
+
+2024 (c) Markus Wackermann
+
+Concept & Design:
+Markus Wackermann
+
+Development:
+Markus Wackermann
+
+Philosophy:
+Markus Wackermann
+
+Testing:
+Markus Wackermann
+
+Special Thanks:
+To my sanity, the only thing that has not left me.
+
+---
+
+Built against
+
+{0}
+{1}
+
+Application Version {2}
+
+---

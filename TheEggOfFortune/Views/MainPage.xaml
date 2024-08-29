@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TheEggOfFortune.ViewModels"
+             xmlns:vl="clr-namespace:TheEggOfFortune.ViewLogic"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:tt="clr-namespace:TouchTracking;assembly=TouchTracking.MAUI"
+             x:Class="TheEggOfFortune.Views.MainPage"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
+             Shell.FlyoutItemIsVisible="False"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.BindingContext>
+        <vm:MainPageViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource Black}" StatusBarStyle="Default" />
+    </ContentPage.Behaviors>
+
+    <Grid Style="{StaticResource EggBackground}">
+        <Grid HorizontalOptions="Center" IsVisible="{Binding ShowEndElements}" Margin="0,140,0,0">
+            <Label Text="So, what?" Style="{StaticResource EndText}" HorizontalTextAlignment="Center"/>
+        </Grid>
+        
+        <Image x:Name="EggImage" Source="{Binding EggImageSource}" Aspect="AspectFit">
+            <Image.Behaviors>
+                <tt:TouchTrackingBehavior TouchAction="TouchTrackingBehavior_TouchAction" />
+            </Image.Behaviors>
+        </Image>
+
+        <Grid HorizontalOptions="Start" Margin="24,24,0,0" HeightRequest="48" VerticalOptions="Start">
+            <mi:MauiIcon Icon="{Binding ThemeIcon}">
+                <mi:MauiIcon.Behaviors>
+                    <mct:TouchBehavior Command="{Binding SwitchThemeModeCommand}"/>
+                </mi:MauiIcon.Behaviors>
+            </mi:MauiIcon>
+        </Grid>
+        
+        <Grid HorizontalOptions="End" Margin="0,10,20,0">
+            <Label Text="{Binding Tapsleft, Converter={vl:IntToStyledStringConverter}}" Style="{StaticResource TapCounter}"/>
+        </Grid>
+
+        <Grid VerticalOptions="End" Margin="24,0,24,96">
+            <Button Text="?" Command="{Binding QuestionButtonCommand}" WidthRequest="80" IsVisible="{Binding ShowEndElements}"/>
+        </Grid>
+
+        <Grid VerticalOptions="End" Margin="24,0,24,48">
+            <Border Style="{StaticResource Bubble}" IsVisible="{Binding ShowWiseText}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="36"/>
+                </Border.StrokeShape>
+                <Label Text="{Binding WiseText}" Style="{StaticResource BubbleText}" HorizontalTextAlignment="Center"/>
+            </Border>
+        </Grid>
+    </Grid>
+
+</ContentPage>

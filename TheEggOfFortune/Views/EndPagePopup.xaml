@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:TheEggOfFortune.ViewModels"
+             xmlns:local="clr-namespace:TheEggOfFortune.Views"
+             x:Class="TheEggOfFortune.Views.EndPagePopup"
+             CanBeDismissedByTappingOutsideOfPopup="True">
+
+    <local:EndPagePopup.BindingContext>
+        <vm:EndPagePopupViewModel/>
+    </local:EndPagePopup.BindingContext>
+
+    <ScrollView Style="{StaticResource EndtextScrollView}">
+        <VerticalStackLayout Margin="16,8,16,24">
+            <Label Text="{Binding EndText}" Style="{StaticResource EndTextPopup}" HorizontalTextAlignment="Center" Margin="0,24,0,12"/>
+            <Image Source="maui.png"/>
+            <Label Text="{Binding EndTextCredits}" Style="{StaticResource EndTextPopup}" HorizontalTextAlignment="Center" Margin="0,12,0,12"/>
+            <Label Text="{Binding LastWords}" Style="{StaticResource EndTextPopup}" HorizontalTextAlignment="Center" Margin="0,12,0,24"/>
+            <Button Text="Close" Command="{Binding CloseButtonCommand}" WidthRequest="120" FontSize="32" />
+        </VerticalStackLayout>
+    </ScrollView>
+</toolkit:Popup>
