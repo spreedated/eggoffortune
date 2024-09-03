@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui.Controls;
+﻿using LogicLayer.Models;
+using Microsoft.Maui.Controls;
 using neXn.Lib.ConfigurationHandler;
 using System.Collections.Generic;
 using TheEggOfFortune.Models;
@@ -21,6 +22,6 @@ namespace TheEggOfFortune.Logic
             { EggState.Halfed, "egg_transparent_bottom_1024.png" }
         };
 
-        public static List<string> Phrases { get; set; }
+        public static List<Phrase> Phrases { get; } = [];
     }
 }

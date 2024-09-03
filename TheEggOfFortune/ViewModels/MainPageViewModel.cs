@@ -7,6 +7,7 @@ using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
 using Serilog;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 using TheEggOfFortune.Logic;
@@ -51,9 +52,12 @@ namespace TheEggOfFortune.ViewModels
 
             Task.Run(() =>
             {
-                if (Globals.Phrases == null || Globals.Phrases.Count <= 0)
+                if (Globals.Phrases.Count <= 0)
                 {
-                    Globals.Phrases = [.. Utilities.LoadTextfileAsync("Phrases.txt").Result.Split('\n')];
+                    foreach (string p in Utilities.LoadTextfileAsync("Phrases.txt").Result.Split('\n').Where(x => !string.IsNullOrEmpty(x)).Select(x => x.Trim()))
+                    {
+                        Globals.Phrases.Add(new() { Text = p });
+                    }
                     this.logger.LogTrace("Loaded {Phrasecount} phrases", Globals.Phrases.Count);
                 }
             });
@@ -164,16 +168,10 @@ namespace TheEggOfFortune.ViewModels
 
             if (Globals.Configuration.RuntimeConfiguration.TapsLeft % 100 == 0)
             {
-                this.WiseText = GetRandomPhrase();
+                this.WiseText = LogicLayer.Utilities.GetRandomPhrase(Globals.Phrases);
                 this.ShowWiseText = true;
                 this.wiseWordTimer.Start();
             }
-        }
-
-        private static string GetRandomPhrase()
-        {
-            Random rnd = new(BitConverter.ToInt32(Guid.NewGuid().ToByteArray()));
-            return Globals.Phrases[rnd.Next(0, Globals.Phrases.Count - 1)];
         }
 
         [RelayCommand]
