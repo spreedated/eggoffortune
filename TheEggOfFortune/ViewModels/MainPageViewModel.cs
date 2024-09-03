@@ -27,7 +27,7 @@ namespace TheEggOfFortune.ViewModels
         private int tapsleft;
 
         [ObservableProperty]
-        private string wiseText = "Some wise\nwords\nHello World!";
+        private string wiseText = null;
 
         [ObservableProperty]
         private bool showWiseText;
@@ -50,11 +50,11 @@ namespace TheEggOfFortune.ViewModels
             this.logger = new LoggerFactory().AddSerilog().CreateLogger("MainPage");
             this.Tapsleft = Globals.Configuration.RuntimeConfiguration.TapsLeft;
 
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 if (Globals.Phrases.Count <= 0)
                 {
-                    foreach (string p in Utilities.LoadTextfileAsync("Phrases.txt").Result.Split('\n').Where(x => !string.IsNullOrEmpty(x)).Select(x => x.Trim()))
+                    foreach (string p in (await Utilities.LoadTextfileAsync("Phrases.txt")).Split('\n').Where(x => !string.IsNullOrEmpty(x)).Select(x => x.Trim()))
                     {
                         Globals.Phrases.Add(new() { Text = p });
                     }

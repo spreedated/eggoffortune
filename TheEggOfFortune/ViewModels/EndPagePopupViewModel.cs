@@ -28,10 +28,7 @@ namespace TheEggOfFortune.ViewModels
 
         public EndPagePopupViewModel()
         {
-            Task.Run(async () =>
-            {
-                await this.LoadTexts();
-            });
+            Task.Run(this.LoadTexts);
         }
 
         [RelayCommand]
