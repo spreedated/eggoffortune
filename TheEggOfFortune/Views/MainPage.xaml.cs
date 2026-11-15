@@ -1,4 +1,5 @@
 ﻿using Microsoft.Maui.Controls;
+using Microsoft.Maui.Devices;
 using TheEggOfFortune.ViewModels;
 using TouchTracking;
 
@@ -23,10 +24,17 @@ namespace TheEggOfFortune.Views
 
         private void TouchTrackingBehavior_TouchAction(object sender, TouchActionEventArgs e)
         {
-            if (e.Type == TouchActionType.Pressed)
+            if (e.Type != TouchActionType.Pressed)
             {
-                ((MainPageViewModel)this.BindingContext).TapCommand.Execute(null);
+                return;
             }
+
+            if (HapticFeedback.Default.IsSupported)
+            {
+                HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+            }
+
+            ((MainPageViewModel)this.BindingContext).TapCommand.Execute(null);
         }
     }
 }
