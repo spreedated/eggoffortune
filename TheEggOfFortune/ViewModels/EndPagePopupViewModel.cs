@@ -39,7 +39,7 @@ namespace TheEggOfFortune.ViewModels
             await Globals.Configuration.SaveAsync().ConfigureAwait(false);
             await Globals.Configuration.LoadAsync().ConfigureAwait(false);
             ((MainPageViewModel)Application.Current.Windows[0].BindingContext).ReloadFromConfiguration();
-            
+
             await this.CloseButton();
         }
 
