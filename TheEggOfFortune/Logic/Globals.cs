@@ -25,13 +25,13 @@ namespace TheEggOfFortune.Logic
         };
 
         public static List<Phrase> Phrases { get; } = [];
-        private static readonly SemaphoreSlim saveGate = new(1, 1);
+        private static readonly SemaphoreSlim _saveGate = new(1, 1);
 
         internal static async Task<bool> SaveConfigurationAsync(bool skipIfBusy = false)
         {
             int timeout = skipIfBusy ? 0 : Timeout.Infinite;
 
-            if (!await saveGate.WaitAsync(timeout).ConfigureAwait(false))
+            if (!await _saveGate.WaitAsync(timeout).ConfigureAwait(false))
             {
                 return false;
             }
@@ -43,7 +43,7 @@ namespace TheEggOfFortune.Logic
             }
             finally
             {
-                saveGate.Release();
+                _saveGate.Release();
             }
         }
     }

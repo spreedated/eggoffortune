@@ -36,8 +36,8 @@ namespace TheEggOfFortune.ViewModels
         [ObservableProperty]
         public partial Image EggImage { get; set; }
 
-        private readonly Timer saveTimer;
-        private readonly Timer wiseWordTimer;
+        private readonly Timer _saveTimer;
+        private readonly Timer _wiseWordTimer;
 
         public MainPageViewModel() : base(nameof(MainPageViewModel))
         {
@@ -51,29 +51,29 @@ namespace TheEggOfFortune.ViewModels
                     {
                         Globals.Phrases.Add(new() { Text = p });
                     }
-                    if (base._logger.IsEnabled(LogLevel.Trace))
+                    if (_logger.IsEnabled(LogLevel.Trace))
                     {
-                        base._logger.LogTrace("Loaded {Phrasecount} phrases", Globals.Phrases.Count);
+                        _logger.LogTrace("Loaded {Phrasecount} phrases", Globals.Phrases.Count);
                     }
                 }
             });
 
-            this.saveTimer = new()
+            _saveTimer = new()
             {
                 Interval = 5000
             };
-            this.wiseWordTimer = new()
+            _wiseWordTimer = new()
             {
                 Interval = 3000
             };
 
-            this.wiseWordTimer.Elapsed += (s, e) =>
+            _wiseWordTimer.Elapsed += (s, e) =>
             {
                 this.ShowWiseText = false;
-                this.wiseWordTimer.Stop();
+                _wiseWordTimer.Stop();
             };
 
-            this.saveTimer.Elapsed += async (s, e) =>
+            _saveTimer.Elapsed += async (s, e) =>
             {
                 try
                 {
@@ -81,11 +81,11 @@ namespace TheEggOfFortune.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    this._logger.LogError(ex, "Autosave failed. Recent progress may not be saved.");
+                    _logger.LogError(ex, "Autosave failed. Recent progress may not be saved.");
                 }
             };
 
-            this.saveTimer.Start();
+            _saveTimer.Start();
 
             Task.Run(async () =>
             {
@@ -163,14 +163,14 @@ namespace TheEggOfFortune.ViewModels
             {
                 this.WiseText = "Your journey has begun...";
                 this.ShowWiseText = true;
-                this.wiseWordTimer.Start();
+                _wiseWordTimer.Start();
                 return;
             }
 
             if (Globals.Configuration.RuntimeConfiguration.TapsLeft <= 0)
             {
                 this.ShowWiseText = false;
-                this.wiseWordTimer.Stop();
+                _wiseWordTimer.Stop();
                 return;
             }
 
@@ -178,7 +178,7 @@ namespace TheEggOfFortune.ViewModels
             {
                 this.WiseText = LogicLayer.Utilities.GetRandomPhrase(Globals.Phrases);
                 this.ShowWiseText = true;
-                this.wiseWordTimer.Start();
+                _wiseWordTimer.Start();
             }
         }
 
