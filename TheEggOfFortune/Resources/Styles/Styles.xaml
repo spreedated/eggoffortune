@@ -2,8 +2,7 @@
 <?xaml-comp compile="true" ?>
 <ResourceDictionary 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Style x:Key="EggBackground" TargetType="Grid">
         <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource EggDark}}"/>
@@ -15,11 +14,6 @@
         <Setter Property="HorizontalOptions" Value="End" />
         <Setter Property="HorizontalTextAlignment" Value="End" />
         <Setter Property="FontFamily" Value="Doom"/>
-    </Style>
-
-    <Style TargetType="{x:Type mi:MauiIcon}">
-        <Setter Property="IconColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"/>
-        <Setter Property="IconSize" Value="48"/>
     </Style>
 
     <Style TargetType="Button">

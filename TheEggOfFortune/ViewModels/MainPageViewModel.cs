@@ -1,7 +1,7 @@
-﻿using CommunityToolkit.Maui.Views;
+﻿using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using MauiIcons.Fluent;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
@@ -18,28 +18,28 @@ namespace TheEggOfFortune.ViewModels
     internal partial class MainPageViewModel : ObservableObject
     {
         [ObservableProperty]
-        private ContentPage instance;
+        public partial ContentPage Instance { get; set; }
 
         [ObservableProperty]
-        private FluentIcons themeIcon = FluentIcons.WeatherSunny48;
+        public partial FluentIcons.Common.Icon ThemeIcon { get; set; } = FluentIcons.Common.Icon.WeatherSunny;
 
         [ObservableProperty]
-        private int tapsleft;
+        public partial int Tapsleft { get; set; }
 
         [ObservableProperty]
-        private string wiseText = null;
+        public partial string WiseText { get; set; } = null;
 
         [ObservableProperty]
-        private bool showWiseText;
+        public partial bool ShowWiseText { get; set; }
 
         [ObservableProperty]
-        private bool showEndElements = false;
+        public partial bool ShowEndElements { get; set; } = false;
 
         [ObservableProperty]
-        private ImageSource eggImageSource = null;
+        public partial ImageSource EggImageSource { get; set; } = null;
 
         [ObservableProperty]
-        private Image eggImage;
+        public partial Image EggImage { get; set; }
 
         private readonly Timer saveTimer;
         private readonly Timer wiseWordTimer;
@@ -77,9 +77,9 @@ namespace TheEggOfFortune.ViewModels
                 this.wiseWordTimer.Stop();
             };
 
-            this.saveTimer.Elapsed += (s, e) =>
+            this.saveTimer.Elapsed += async (s, e) =>
             {
-                Globals.Configuration.Save();
+                await Globals.Configuration.SaveAsync().ConfigureAwait(false);
             };
 
             this.saveTimer.Start();
@@ -100,16 +100,21 @@ namespace TheEggOfFortune.ViewModels
             });
         }
 
+        public void ReloadFromConfiguration()
+        {
+            this.Tapsleft = Globals.Configuration.RuntimeConfiguration.TapsLeft;
+        }
+
         private void DetermineAndSetTheme()
         {
             if (Globals.Configuration.RuntimeConfiguration.Theme)
             {
-                this.ThemeIcon = FluentIcons.WeatherSunny48;
+                this.ThemeIcon = FluentIcons.Common.Icon.WeatherSunny;
                 Application.Current.UserAppTheme = AppTheme.Light;
             }
             else
             {
-                this.ThemeIcon = FluentIcons.WeatherMoon48;
+                this.ThemeIcon = FluentIcons.Common.Icon.WeatherMoon;
                 Application.Current.UserAppTheme = AppTheme.Dark;
             }
         }
@@ -141,11 +146,11 @@ namespace TheEggOfFortune.ViewModels
 
             this.Instance.Dispatcher.Dispatch(async () =>
             {
-                await this.EggImage.TranslateTo(rnd.Next(-7, 0), 0, (uint)rnd.Next(5, 10));    // Move image left
-                await this.EggImage.TranslateTo(rnd.Next(-7, 0), rnd.Next(-7, 0), (uint)rnd.Next(5, 10)); // Move image diagonally up and left
-                await this.EggImage.TranslateTo(rnd.Next(0, 7), rnd.Next(0, 7), (uint)rnd.Next(10, 20));   // Move image diagonally down and right
-                await this.EggImage.TranslateTo(0, rnd.Next(0, 7), (uint)rnd.Next(5, 10));     // Move image left
-                await this.EggImage.TranslateTo(0, 0, (uint)rnd.Next(80, 100));       // Move image up
+                await this.EggImage.TranslateToAsync(rnd.Next(-7, 0), 0, (uint)rnd.Next(5, 10));    // Move image left
+                await this.EggImage.TranslateToAsync(rnd.Next(-7, 0), rnd.Next(-7, 0), (uint)rnd.Next(5, 10)); // Move image diagonally up and left
+                await this.EggImage.TranslateToAsync(rnd.Next(0, 7), rnd.Next(0, 7), (uint)rnd.Next(10, 20));   // Move image diagonally down and right
+                await this.EggImage.TranslateToAsync(0, rnd.Next(0, 7), (uint)rnd.Next(5, 10));     // Move image left
+                await this.EggImage.TranslateToAsync(0, 0, (uint)rnd.Next(80, 100));       // Move image up
             });
         }
 

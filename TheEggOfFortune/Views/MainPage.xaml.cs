@@ -1,5 +1,4 @@
-﻿using MauiIcons.Core;
-using Microsoft.Maui.Controls;
+﻿using Microsoft.Maui.Controls;
 using TheEggOfFortune.ViewModels;
 using TouchTracking;
 
@@ -10,7 +9,6 @@ namespace TheEggOfFortune.Views
         public MainPage()
         {
             this.InitializeComponent();
-            _ = new MauiIcon(); //Seems odd? That's because it is. This is a workaround for a bug in the MAUI Framework. Probably will never be fixed. ¯\_(ツ)_/¯
             ((MainPageViewModel)this.BindingContext).Instance = this;
             ((MainPageViewModel)this.BindingContext).EggImage = this.EggImage;
         }

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Controls;
 using System;
 using System.Reflection;
 using System.Runtime.Versioning;
@@ -12,19 +13,19 @@ namespace TheEggOfFortune.ViewModels
     internal partial class EndPagePopupViewModel : ObservableObject
     {
         [ObservableProperty]
-        private Popup instance;
+        public partial Popup Instance { get; set; }
 
         [ObservableProperty]
-        private string endText = null;
+        public partial string EndText { get; set; } = null;
 
         [ObservableProperty]
-        private string endTextCredits = null;
+        public partial string EndTextCredits { get; set; } = null;
 
         [ObservableProperty]
-        private string lastWords = null;
+        public partial string LastWords { get; set; } = null;
 
         [ObservableProperty]
-        private string license = null;
+        public partial string License { get; set; } = null;
 
         public EndPagePopupViewModel()
         {
@@ -32,9 +33,20 @@ namespace TheEggOfFortune.ViewModels
         }
 
         [RelayCommand]
-        private void CloseButton()
+        private async Task ResetButton()
         {
-            this.Instance.Close();
+            Globals.Configuration.RuntimeConfiguration.TapsLeft = 20000;
+            await Globals.Configuration.SaveAsync().ConfigureAwait(false);
+            await Globals.Configuration.LoadAsync().ConfigureAwait(false);
+            ((MainPageViewModel)Application.Current.Windows[0].BindingContext).ReloadFromConfiguration();
+            
+            await this.CloseButton();
+        }
+
+        [RelayCommand]
+        private async Task CloseButton()
+        {
+            await this.Instance.CloseAsync();
         }
 
         public async Task LoadTexts()
@@ -46,7 +58,7 @@ namespace TheEggOfFortune.ViewModels
 
             if (string.IsNullOrEmpty(this.EndTextCredits))
             {
-                DateTime builddate = neXn.Lib.Maui.Utilities.GetBuildDate(typeof(EndPagePopupViewModel).Assembly);
+                DateTime builddate = neXn.Maui.Utilities.GetBuildDate(typeof(EndPagePopupViewModel).Assembly);
                 Assembly a = this.GetType().Assembly;
 
                 this.EndTextCredits = string.Format(await Utilities.LoadTextfileAsync("Credits.txt"), a.GetCustomAttribute<TargetFrameworkAttribute>().FrameworkDisplayName, builddate == default ? "N/A" : builddate, a.GetName().Version.ToString());

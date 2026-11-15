@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Maui;
-using MauiIcons.Fluent;
+using FluentIcons.Maui;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls.Hosting;
 using Microsoft.Maui.Hosting;
@@ -19,7 +19,7 @@ namespace TheEggOfFortune
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-                .UseFluentMauiIcons()
+                .UseFluentIcons()
                 .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
@@ -40,7 +40,7 @@ namespace TheEggOfFortune
             AppLogger = new LoggerFactory().AddSerilog().CreateLogger("App");
 
             Globals.Configuration = new(new(Path.Combine(FileSystem.Current.AppDataDirectory, "config.json")));
-            Globals.Configuration.Load();
+            Globals.Configuration.LoadAsync().ConfigureAwait(false);
             AppLogger.LogTrace("Config loaded with \"{Tapsleft}\" taps left", Globals.Configuration.RuntimeConfiguration.TapsLeft);
 
             return builder.Build();

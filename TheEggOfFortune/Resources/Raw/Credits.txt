@@ -1,18 +1,18 @@
 ﻿The Egg of Fortune
 
-2024 (c) Markus Wackermann
+2024-2026 (c) Dante Wackermann
 
 Concept & Design:
-Markus Wackermann
+Dante Wackermann
 
 Development:
-Markus Wackermann
+Dante Wackermann
 
 Philosophy:
-Markus Wackermann
+Dante Wackermann
 
 Testing:
-Markus Wackermann
+Dante Wackermann
 
 Special Thanks:
 To my sanity, the only thing that has not left me.
