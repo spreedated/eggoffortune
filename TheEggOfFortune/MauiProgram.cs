@@ -7,13 +7,14 @@ using Microsoft.Maui.Storage;
 using Serilog;
 using Serilog.Events;
 using System.IO;
+using System.Threading.Tasks;
 using TheEggOfFortune.Logic;
 
 namespace TheEggOfFortune
 {
     public static class MauiProgram
     {
-        public static Microsoft.Extensions.Logging.ILogger AppLogger { get; private set; }
+        public static Microsoft.Extensions.Logging.ILogger Logger { get; private set; }
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
@@ -37,11 +38,9 @@ namespace TheEggOfFortune
                 .WriteTo.Debug()
                 .CreateLogger();
 
-            AppLogger = new LoggerFactory().AddSerilog().CreateLogger("App");
+            Logger = new LoggerFactory().AddSerilog().CreateLogger("App");
 
             Globals.Configuration = new(new(Path.Combine(FileSystem.Current.AppDataDirectory, "config.json")));
-            Globals.Configuration.LoadAsync().ConfigureAwait(false);
-            AppLogger.LogTrace("Config loaded with \"{Tapsleft}\" taps left", Globals.Configuration.RuntimeConfiguration.TapsLeft);
 
             return builder.Build();
         }

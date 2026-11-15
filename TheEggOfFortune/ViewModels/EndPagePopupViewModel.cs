@@ -10,24 +10,21 @@ using TheEggOfFortune.Logic;
 
 namespace TheEggOfFortune.ViewModels
 {
-    internal partial class EndPagePopupViewModel : ObservableObject
+    internal partial class EndPagePopupViewModel : ViewModelBase<Popup>
     {
         [ObservableProperty]
-        public partial Popup Instance { get; set; }
+        public partial string EndText { get; set; }
 
         [ObservableProperty]
-        public partial string EndText { get; set; } = null;
+        public partial string EndTextCredits { get; set; }
 
         [ObservableProperty]
-        public partial string EndTextCredits { get; set; } = null;
+        public partial string LastWords { get; set; }
 
         [ObservableProperty]
-        public partial string LastWords { get; set; } = null;
+        public partial string License { get; set; }
 
-        [ObservableProperty]
-        public partial string License { get; set; } = null;
-
-        public EndPagePopupViewModel()
+        public EndPagePopupViewModel() : base(nameof(EndPagePopupViewModel))
         {
             Task.Run(this.LoadTexts);
         }
@@ -36,7 +33,7 @@ namespace TheEggOfFortune.ViewModels
         private async Task ResetButton()
         {
             Globals.Configuration.RuntimeConfiguration.TapsLeft = 20000;
-            await Globals.Configuration.SaveAsync().ConfigureAwait(false);
+            await Globals.SaveConfigurationAsync();
             await Globals.Configuration.LoadAsync().ConfigureAwait(false);
             ((MainPageViewModel)Application.Current.Windows[0].BindingContext).ReloadFromConfiguration();
 
@@ -46,7 +43,7 @@ namespace TheEggOfFortune.ViewModels
         [RelayCommand]
         private async Task CloseButton()
         {
-            await this.Instance.CloseAsync();
+            await base.Instance.CloseAsync();
         }
 
         public async Task LoadTexts()

@@ -2,6 +2,8 @@
 using Microsoft.Maui.Controls;
 using neXn.Lib.ConfigurationHandler;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using TheEggOfFortune.Models;
 
 namespace TheEggOfFortune.Logic
@@ -23,5 +25,26 @@ namespace TheEggOfFortune.Logic
         };
 
         public static List<Phrase> Phrases { get; } = [];
+        private static readonly SemaphoreSlim saveGate = new(1, 1);
+
+        internal static async Task<bool> SaveConfigurationAsync(bool skipIfBusy = false)
+        {
+            int timeout = skipIfBusy ? 0 : Timeout.Infinite;
+
+            if (!await saveGate.WaitAsync(timeout).ConfigureAwait(false))
+            {
+                return false;
+            }
+
+            try
+            {
+                await Configuration.SaveAsync().ConfigureAwait(false);
+                return true;
+            }
+            finally
+            {
+                saveGate.Release();
+            }
+        }
     }
 }

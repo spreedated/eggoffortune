@@ -12,7 +12,7 @@ namespace TheEggOfFortune.Logic
             {
                 using (StreamReader reader = new(stream))
                 {
-                    return (await reader.ReadToEndAsync()).Replace("\r\n", "\n").Replace("\r", "").Trim();
+                    return (await reader.ReadToEndAsync()).ReplaceLineEndings("\n").Trim();
                 }
             }
         }

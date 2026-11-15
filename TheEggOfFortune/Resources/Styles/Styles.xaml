@@ -53,8 +53,8 @@
 
     <Style x:Key="EndtextScrollView" TargetType="ScrollView">
         <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource EggDark}}"/>
-        <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
-        <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+        <Setter Property="VerticalOptions" Value="Fill"/>
+        <Setter Property="HorizontalOptions" Value="Fill"/>
     </Style>
 
 </ResourceDictionary>

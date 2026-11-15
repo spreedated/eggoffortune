@@ -4,7 +4,6 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
-using Serilog;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,11 +13,8 @@ using TheEggOfFortune.Views;
 
 namespace TheEggOfFortune.ViewModels
 {
-    internal partial class MainPageViewModel : ObservableObject
+    internal partial class MainPageViewModel : ViewModelBase<ContentPage>
     {
-        [ObservableProperty]
-        public partial ContentPage Instance { get; set; }
-
         [ObservableProperty]
         public partial FluentIcons.Common.Icon ThemeIcon { get; set; } = FluentIcons.Common.Icon.WeatherSunny;
 
@@ -26,27 +22,25 @@ namespace TheEggOfFortune.ViewModels
         public partial int Tapsleft { get; set; }
 
         [ObservableProperty]
-        public partial string WiseText { get; set; } = null;
+        public partial string WiseText { get; set; }
 
         [ObservableProperty]
         public partial bool ShowWiseText { get; set; }
 
         [ObservableProperty]
-        public partial bool ShowEndElements { get; set; } = false;
+        public partial bool ShowEndElements { get; set; }
 
         [ObservableProperty]
-        public partial ImageSource EggImageSource { get; set; } = null;
+        public partial ImageSource EggImageSource { get; set; }
 
         [ObservableProperty]
         public partial Image EggImage { get; set; }
 
         private readonly Timer saveTimer;
         private readonly Timer wiseWordTimer;
-        private readonly Microsoft.Extensions.Logging.ILogger logger;
 
-        public MainPageViewModel()
+        public MainPageViewModel() : base(nameof(MainPageViewModel))
         {
-            this.logger = new LoggerFactory().AddSerilog().CreateLogger("MainPage");
             this.Tapsleft = Globals.Configuration.RuntimeConfiguration.TapsLeft;
 
             Task.Run(async () =>
@@ -57,7 +51,10 @@ namespace TheEggOfFortune.ViewModels
                     {
                         Globals.Phrases.Add(new() { Text = p });
                     }
-                    this.logger.LogTrace("Loaded {Phrasecount} phrases", Globals.Phrases.Count);
+                    if (base._logger.IsEnabled(LogLevel.Trace))
+                    {
+                        base._logger.LogTrace("Loaded {Phrasecount} phrases", Globals.Phrases.Count);
+                    }
                 }
             });
 
@@ -78,7 +75,14 @@ namespace TheEggOfFortune.ViewModels
 
             this.saveTimer.Elapsed += async (s, e) =>
             {
-                await Globals.Configuration.SaveAsync().ConfigureAwait(false);
+                try
+                {
+                    await Globals.SaveConfigurationAsync(skipIfBusy: true).ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    this._logger.LogError(ex, "Autosave failed. Recent progress may not be saved.");
+                }
             };
 
             this.saveTimer.Start();
@@ -87,12 +91,12 @@ namespace TheEggOfFortune.ViewModels
             {
                 this.DetermineAndSetEggImage();
 
-                while (this.Instance == null)
+                while (base.Instance == null)
                 {
                     await Task.Delay(50);
                 }
 
-                this.Instance.Dispatcher.Dispatch(() =>
+                base.Instance.Dispatcher.Dispatch(() =>
                 {
                     this.DetermineAndSetTheme();
                 });
@@ -143,7 +147,7 @@ namespace TheEggOfFortune.ViewModels
         {
             Random rnd = new(BitConverter.ToInt32(Guid.NewGuid().ToByteArray()));
 
-            this.Instance.Dispatcher.Dispatch(async () =>
+            base.Instance.Dispatcher.Dispatch(async () =>
             {
                 await this.EggImage.TranslateToAsync(rnd.Next(-7, 0), 0, (uint)rnd.Next(5, 10));    // Move image left
                 await this.EggImage.TranslateToAsync(rnd.Next(-7, 0), rnd.Next(-7, 0), (uint)rnd.Next(5, 10)); // Move image diagonally up and left
@@ -211,7 +215,7 @@ namespace TheEggOfFortune.ViewModels
         [RelayCommand]
         private void QuestionButton()
         {
-            this.Instance.ShowPopup(new EndPagePopup());
+            base.Instance.ShowPopup(new EndPagePopup());
         }
     }
 }
