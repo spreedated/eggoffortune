@@ -4,6 +4,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:vm="clr-namespace:TheEggOfFortune.ViewModels"
              xmlns:ve="clr-namespace:TheEggOfFortune.ViewElements"
+             xmlns:vel="clr-namespace:neXn.Maui.ViewElements;assembly=neXn.Maui"
              xmlns:local="clr-namespace:TheEggOfFortune.Views"
              x:Class="TheEggOfFortune.Views.EndPagePopup"
              CanBeDismissedByTappingOutsideOfPopup="True">
@@ -26,9 +27,9 @@
             <Label Grid.Row="0" Text="{Binding EndText}" Style="{StaticResource EndTextPopup}" HorizontalTextAlignment="Center" Margin="0,24,0,12"/>
             <Image Grid.Row="1" Source="maui.png"/>
             <Label Grid.Row="2" Text="{Binding EndTextCredits}" Style="{StaticResource EndTextPopup}" HorizontalTextAlignment="Center" Margin="0,12,0,12"/>
-            <Label Grid.Row="3" Text="{Binding LastWords}" Style="{StaticResource EndTextPopup}" HorizontalTextAlignment="Center" Margin="0,12,0,24"/>
-            <ve:ButtonDoubleConfirm Grid.Row="4" Text="Restart journey" Command="{Binding ResetButtonCommand}" MinimumWidthRequest="120" FontSize="32" Margin="0,8,0,0"/>
-            <ve:ButtonDoubleConfirm Grid.Row="5" Text="Close" Command="{Binding CloseButtonCommand}" MinimumWidthRequest="120" FontSize="32" Margin="0,8,0,0" />
+            <Label Grid.Row="3" Text="{Binding LastWords}" Style="{StaticResource EndTextPopup}" HorizontalTextAlignment="Center" Margin="0,12,0,24" />
+            <vel:ButtonDoubleConfirm Grid.Row="4" Text="Restart journey" Command="{Binding ResetButtonCommand}" MinimumWidthRequest="120" FontSize="32" Margin="0,8,0,0" WarningTimeout="1.8" />
+            <vel:ButtonDoubleConfirm Grid.Row="5" Text="Close" Command="{Binding CloseButtonCommand}" MinimumWidthRequest="120" FontSize="32" Margin="0,8,0,0" WarningAppendixAndSuffix="!" />
         </Grid>
     </ScrollView>
 </toolkit:Popup>
