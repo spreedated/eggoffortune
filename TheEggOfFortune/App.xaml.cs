@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
+using System;
 using TheEggOfFortune.Logic;
 
 namespace TheEggOfFortune
@@ -13,6 +13,7 @@ namespace TheEggOfFortune
             this.InitializeComponent();
         }
 
+        //TODO: Add a splashscreen with my Name etc. and a loading animation while the config is being loaded
         protected override Window CreateWindow(IActivationState activationState)
         {
             Label message = new()
@@ -35,6 +36,7 @@ namespace TheEggOfFortune
                 try
                 {
                     await Globals.Configuration.LoadAsync();
+                    Globals.ScoreService.SetScore(Globals.Configuration.RuntimeConfiguration.TapsLeft);
                     if (MauiProgram.Logger.IsEnabled(LogLevel.Trace))
                     {
                         MauiProgram.Logger.LogTrace("Config loaded with {Tapsleft} taps left", Globals.Configuration.RuntimeConfiguration.TapsLeft);

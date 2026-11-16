@@ -1,11 +1,11 @@
 ﻿using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Maui.Controls;
 using System;
 using System.Reflection;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
+using System.Timers;
 using TheEggOfFortune.Logic;
 
 namespace TheEggOfFortune.ViewModels
@@ -24,20 +24,18 @@ namespace TheEggOfFortune.ViewModels
         [ObservableProperty]
         public partial string License { get; set; }
 
+        #region Ctor
         public EndPagePopupViewModel() : base(nameof(EndPagePopupViewModel))
         {
             Task.Run(this.LoadTexts);
         }
+        #endregion
 
         [RelayCommand]
         private async Task ResetButton()
         {
-            Globals.Configuration.RuntimeConfiguration.TapsLeft = 20000;
-            await Globals.SaveConfigurationAsync();
-            await Globals.Configuration.LoadAsync().ConfigureAwait(false);
-            ((MainPageViewModel)Application.Current.Windows[0].BindingContext).ReloadFromConfiguration();
-
-            await this.CloseButton();
+            Globals.ScoreService.ResetScore();
+            await base.Instance.CloseAsync();
         }
 
         [RelayCommand]

@@ -1,0 +1,7 @@
+<ContentView  x:Class="TheEggOfFortune.ViewElements.ButtonDoubleConfirm"
+              xmlns:local="clr-namespace:TheEggOfFortune.ViewElements"
+              x:DataType="local:ButtonDoubleConfirm"
+              x:Name="Root">
+
+    <Button Text="{Binding Text, Source={x:Reference Root}}" Command="{Binding ButtonClickedCommand, Source={x:Reference Root}}" FontSize="{Binding FontSize, Source={x:Reference Root}}" />
+</ContentView>

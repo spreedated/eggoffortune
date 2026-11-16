@@ -46,5 +46,7 @@ namespace TheEggOfFortune.Logic
                 _saveGate.Release();
             }
         }
+
+        public static ScoreService ScoreService { get; } = new();
     }
 }

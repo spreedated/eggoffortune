@@ -92,6 +92,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="ViewElements\ButtonDoubleConfirm.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\DevScreen.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\EndPagePopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

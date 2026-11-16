@@ -7,7 +7,6 @@ using Microsoft.Maui.Storage;
 using Serilog;
 using Serilog.Events;
 using System.IO;
-using System.Threading.Tasks;
 using TheEggOfFortune.Logic;
 
 namespace TheEggOfFortune

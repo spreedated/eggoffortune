@@ -1,5 +1,6 @@
 ﻿using Microsoft.Maui.Controls;
 using Microsoft.Maui.Devices;
+using TheEggOfFortune.Logic;
 using TheEggOfFortune.ViewModels;
 using TouchTracking;
 
@@ -29,12 +30,22 @@ namespace TheEggOfFortune.Views
                 return;
             }
 
-            if (HapticFeedback.Default.IsSupported)
+            if (HapticFeedback.Default.IsSupported && Globals.ScoreService.Score > 0)
             {
                 HapticFeedback.Default.Perform(HapticFeedbackType.Click);
             }
 
             ((MainPageViewModel)this.BindingContext).TapCommand.Execute(null);
+        }
+
+        private void TouchTrackingBehavior_TouchActionCounter(object sender, TouchActionEventArgs e)
+        {
+            if (e.Type != TouchActionType.Pressed)
+            {
+                return;
+
+            }
+            DeveloperService.AddTap(DeveloperService.TapCode.Counter);
         }
     }
 }
