@@ -14,7 +14,7 @@
 		<ApplicationTitle>The Egg of Fortune</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.nexn.theeggoffortune</ApplicationId>
+		<ApplicationId>com.nexn.eggoffortune</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>2.0</ApplicationDisplayVersion>

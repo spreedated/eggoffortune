@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35208.52
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheEggOfFortune", "TheEggOfFortune\TheEggOfFortune.csproj", "{EA2B3DFE-F2FC-4977-A9BF-8C4EE53A0DE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheEggOfFortune", "src\TheEggOfFortune\TheEggOfFortune.csproj", "{EA2B3DFE-F2FC-4977-A9BF-8C4EE53A0DE0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{389F2F38-E098-47D2-85EA-E4DFA5997D4F}"
 	ProjectSection(SolutionItems) = preProject
@@ -13,9 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{BF129D53-B60E-4DAA-BCF5-E4708A074379}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "tests\UnitTests\UnitTests.csproj", "{BF129D53-B60E-4DAA-BCF5-E4708A074379}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicLayer", "LogicLayer\LogicLayer.csproj", "{719A4477-F378-44E4-A713-81619F8D057E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicLayer", "src\LogicLayer\LogicLayer.csproj", "{719A4477-F378-44E4-A713-81619F8D057E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
