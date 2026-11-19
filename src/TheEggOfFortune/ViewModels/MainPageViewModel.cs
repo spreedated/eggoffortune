@@ -193,7 +193,7 @@ namespace TheEggOfFortune.ViewModels
         #endregion
 
         [RelayCommand]
-        private void OnTap()
+        private async Task OnTap()
         {
             if (Globals.ScoreService.Score == 20000)
             {
@@ -203,6 +203,7 @@ namespace TheEggOfFortune.ViewModels
             if (Globals.ScoreService.Score <= 0)
             {
                 Globals.ScoreService.SetScore(0);
+                await Globals.Configuration.SaveAsync().ConfigureAwait(false);
                 return;
             }
 
