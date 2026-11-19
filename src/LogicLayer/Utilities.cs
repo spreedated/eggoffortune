@@ -18,7 +18,7 @@ namespace LogicLayer
             }
 
             Random rnd = new(BitConverter.ToInt32(Guid.NewGuid().ToByteArray()));
-            Phrase[] unusedPhrases = phraseCollection.Where(x => !x.Used).ToArray();
+            Phrase[] unusedPhrases = [.. phraseCollection.Where(x => !x.Used)];
             Phrase selection = unusedPhrases[rnd.Next(0, unusedPhrases.Length - 1)];
 
             phraseCollection.First(x => x == selection).Used = true;

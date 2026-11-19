@@ -24,7 +24,12 @@ namespace TheEggOfFortune.Logic
             { EggState.Halfed, "egg_transparent_bottom_1024.png" }
         };
 
-        public static List<Phrase> Phrases { get; } = [];
+        public static List<Phrase> PhrasesAll { get; } = [];
+        public static List<Phrase> PhrasesInitial { get; } = [];
+        public static List<Phrase> PhrasesRoutine { get; } = [];
+        public static List<Phrase> PhrasesImpatience { get; } = [];
+        public static List<Phrase> PhrasesDoubt { get; } = [];
+        public static List<Phrase> PhrasesReflection { get; } = [];
         private static readonly SemaphoreSlim _saveGate = new(1, 1);
 
         internal static async Task<bool> SaveConfigurationAsync(bool skipIfBusy = false)

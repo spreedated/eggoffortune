@@ -1,10 +1,12 @@
 ﻿using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LogicLayer.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
@@ -111,7 +113,35 @@ namespace TheEggOfFortune.ViewModels
 
             if (Globals.ScoreService.Score % 100 == 0)
             {
-                this.WiseText = LogicLayer.Utilities.GetRandomPhrase(Globals.Phrases);
+                List<Phrase> selectedPhraseCategory = null;
+
+                if (Globals.ScoreService.Score <= 20000 && Globals.ScoreService.Score >= 19000)
+                {
+                    selectedPhraseCategory = Globals.PhrasesInitial;
+                }
+
+                if (Globals.ScoreService.Score <= 18999 && Globals.ScoreService.Score >= 12000)
+                {
+                    selectedPhraseCategory = Globals.PhrasesRoutine;
+                }
+
+                if (Globals.ScoreService.Score <= 11999 && Globals.ScoreService.Score >= 6000)
+                {
+                    selectedPhraseCategory = Globals.PhrasesImpatience;
+                }
+
+                if (Globals.ScoreService.Score <= 5999 && Globals.ScoreService.Score >= 2000)
+                {
+                    selectedPhraseCategory = Globals.PhrasesDoubt;
+                }
+
+                if (Globals.ScoreService.Score <= 1999)
+                {
+                    selectedPhraseCategory = Globals.PhrasesReflection;
+                }
+
+                this.WiseText = LogicLayer.Utilities.GetRandomPhrase(selectedPhraseCategory);
+
                 this.ShowWiseText = true;
                 _wiseWordTimer.Start();
             }
@@ -133,15 +163,22 @@ namespace TheEggOfFortune.ViewModels
 
             Task.Run(async () =>
             {
-                if (Globals.Phrases.Count <= 0)
+                if (Globals.PhrasesAll.Count <= 0)
                 {
                     foreach (string p in (await Utilities.LoadTextfileAsync("Phrases.txt")).Split('\n').Where(x => !string.IsNullOrEmpty(x)).Select(x => x.Trim()))
                     {
-                        Globals.Phrases.Add(new() { Text = p });
+                        Globals.PhrasesAll.Add(new() { Text = p });
                     }
+
+                    Globals.PhrasesInitial.AddRange(Globals.PhrasesAll.Skip(0).Take(60));
+                    Globals.PhrasesRoutine.AddRange(Globals.PhrasesAll.Skip(60).Take(47));
+                    Globals.PhrasesImpatience.AddRange(Globals.PhrasesAll.Skip(107).Take(38));
+                    Globals.PhrasesDoubt.AddRange(Globals.PhrasesAll.Skip(145).Take(78));
+                    Globals.PhrasesReflection.AddRange(Globals.PhrasesAll.Skip(223));
+
                     if (_logger.IsEnabled(LogLevel.Trace))
                     {
-                        _logger.LogTrace("Loaded {Phrasecount} phrases", Globals.Phrases.Count);
+                        _logger.LogTrace("Loaded {Phrasecount} phrases", Globals.PhrasesAll.Count);
                     }
                 }
             });
