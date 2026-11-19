@@ -16,7 +16,7 @@ namespace UnitTests
         public void SetUp()
         {
             Assembly a = typeof(UtilTests).Assembly;
-            string s = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(a.Location), "..", "..", "..", "..", "TheEggOfFortune", "Resources", "Raw", "Phrases.txt"));
+            string s = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(a.Location), "..", "..", "..", "..", "..", "src", "TheEggOfFortune", "Resources", "Raw", "Phrases.txt"));
 
             using (Stream f = File.Open(s, FileMode.Open, FileAccess.Read, FileShare.Read))
             {

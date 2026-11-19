@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LogicLayer\LogicLayer.csproj" />
+    <ProjectReference Include="..\..\src\LogicLayer\LogicLayer.csproj" />
   </ItemGroup>
 
   <ItemGroup>
