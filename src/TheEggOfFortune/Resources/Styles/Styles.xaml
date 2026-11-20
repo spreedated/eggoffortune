@@ -14,7 +14,7 @@
         <Setter Property="HorizontalOptions" Value="End" />
         <Setter Property="HorizontalTextAlignment" Value="End" />
         <Setter Property="FontFamily" Value="Doom"/>
-        <Setter Property="MinimumWidthRequest" Value="100"/>
+        <Setter Property="MinimumWidthRequest" Value="120"/>
     </Style>
 
     <Style TargetType="Button">

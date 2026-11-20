@@ -31,7 +31,7 @@ namespace TheEggOfFortune.ViewModels
         public partial string WiseText { get; set; }
 
         [ObservableProperty]
-        public partial bool ShowWiseText { get; set; }
+        public partial double WiseTextOpacity { get; set; } = 0d;
 
         [ObservableProperty]
         public partial bool ShowEndElements { get; set; }
@@ -99,14 +99,14 @@ namespace TheEggOfFortune.ViewModels
             if (Globals.ScoreService.Score == 20000)
             {
                 this.WiseText = "Your journey has begun...";
-                this.ShowWiseText = true;
+                this.WiseTextOpacity = 1;
                 _wiseWordTimer.Start();
                 return;
             }
 
             if (Globals.ScoreService.Score <= 0)
             {
-                this.ShowWiseText = false;
+                this.WiseTextOpacity = 0;
                 _wiseWordTimer.Stop();
                 return;
             }
@@ -142,7 +142,7 @@ namespace TheEggOfFortune.ViewModels
 
                 this.WiseText = LogicLayer.Utilities.GetRandomPhrase(selectedPhraseCategory);
 
-                this.ShowWiseText = true;
+                this.WiseTextOpacity = 1;
                 _wiseWordTimer.Start();
             }
         }
@@ -194,7 +194,7 @@ namespace TheEggOfFortune.ViewModels
 
             _wiseWordTimer.Elapsed += (s, e) =>
             {
-                this.ShowWiseText = false;
+                this.WiseTextOpacity = 0;
                 _wiseWordTimer.Stop();
             };
 
@@ -247,8 +247,6 @@ namespace TheEggOfFortune.ViewModels
             this.EggAnimation();
 
             Globals.ScoreService.SubtractScore();
-
-            DeveloperService.AddTap(DeveloperService.TapCode.Egg);
         }
 
         [RelayCommand]

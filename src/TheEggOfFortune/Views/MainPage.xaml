@@ -21,55 +21,62 @@
     </ContentPage.Behaviors>
 
     <Grid Style="{StaticResource EggBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         
+        <AbsoluteLayout x:Name="HitMarkerLayer" InputTransparent="True" CascadeInputTransparent="True" ZIndex="100" Grid.RowSpan="3" />
 
-        <Grid HorizontalOptions="Center" IsVisible="{Binding ShowEndElements}" Margin="0,140,0,0">
-            <Label Text="So, what?" Style="{StaticResource EndText}" HorizontalTextAlignment="Center"/>
-        </Grid>
-
-        <Image x:Name="EggImage" Source="{Binding EggImageSource}" Aspect="AspectFit">
-            <Image.Behaviors>
-                <tt:TouchTrackingBehavior TouchAction="TouchTrackingBehavior_TouchAction" />
-            </Image.Behaviors>
-        </Image>
-
-        <Grid HorizontalOptions="Start" Margin="24,24,0,0" HeightRequest="48" VerticalOptions="Start">
+        <!-- Header -->
+        <Grid Grid.Row="0" HorizontalOptions="Start" Margin="24,24,0,0" HeightRequest="48" VerticalOptions="Start">
             <fi:FluentIcon
-                    Icon="{Binding ThemeIcon}"
-                    IconVariant="Regular"
-                    IconSize="Size48"
-                    FontSize="48"
-                    WidthRequest="48"
-                    HeightRequest="48"
-                    ForegroundColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}">
+                Icon="{Binding ThemeIcon}"
+                IconVariant="Regular"
+                IconSize="Size48"
+                FontSize="48"
+                WidthRequest="48"
+                HeightRequest="48"
+                ForegroundColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}">
                 <fi:FluentIcon.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding SwitchThemeModeCommand}" />
                 </fi:FluentIcon.GestureRecognizers>
             </fi:FluentIcon>
         </Grid>
 
-        <Grid HorizontalOptions="End" Margin="0,10,20,0">
+        <Grid Grid.Row="0" HorizontalOptions="End" Margin="0,10,20,0">
             <Label Text="{Binding Tapsleft, Converter={vl:IntToStyledStringConverter}}" Style="{StaticResource TapCounter}">
                 <Label.Behaviors>
                     <tt:TouchTrackingBehavior TouchAction="TouchTrackingBehavior_TouchActionCounter" />
                 </Label.Behaviors>
             </Label>
         </Grid>
+        <!-- # ### # -->
 
-        <Grid VerticalOptions="End" Margin="24,0,24,96">
+        <Grid Grid.Row="1" HorizontalOptions="Center" IsVisible="{Binding ShowEndElements}" Margin="0,140,0,0">
+            <Label Text="So, what?" Style="{StaticResource EndText}" HorizontalTextAlignment="Center"/>
+        </Grid>
+
+        <Image Grid.Row="1" x:Name="EggImage" Source="{Binding EggImageSource}" Aspect="AspectFit">
+            <Image.Behaviors>
+                <tt:TouchTrackingBehavior TouchAction="TouchTrackingBehavior_TouchAction" />
+            </Image.Behaviors>
+        </Image>
+
+        <Grid Grid.Row="1" VerticalOptions="End" Margin="24,0,24,96">
             <Button Text="?" Command="{Binding QuestionButtonCommand}" WidthRequest="80" IsVisible="{Binding ShowEndElements}"/>
         </Grid>
 
-        <Grid VerticalOptions="End" Margin="24,0,24,48">
-            <Border Style="{StaticResource Bubble}" IsVisible="{Binding ShowWiseText}">
+        <!-- Footer -->
+        <Grid Grid.Row="2" VerticalOptions="End" Margin="24,0,24,48">
+            <Border Style="{StaticResource Bubble}" Opacity="{Binding WiseTextOpacity}">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="36"/>
                 </Border.StrokeShape>
                 <Label Text="{Binding WiseText}" Style="{StaticResource BubbleText}" HorizontalTextAlignment="Center"/>
             </Border>
         </Grid>
-
-        
+        <!-- # ### #-->
     </Grid>
-
 </ContentPage>
