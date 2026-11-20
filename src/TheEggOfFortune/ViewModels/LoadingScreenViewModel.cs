@@ -73,7 +73,7 @@ namespace TheEggOfFortune.ViewModels
 
                 sw.Stop();
 
-                _logger.LogTrace("Loading completed in {ElapsedMilliseconds} ms", sw.ElapsedMilliseconds);
+                this.LogLoadingTime(sw.ElapsedMilliseconds);
 
                 while (!_timerHit)
                 {
@@ -97,9 +97,12 @@ namespace TheEggOfFortune.ViewModels
 
         private async Task LoadConfigurationAsync()
         {
-            _logger.LogTrace("Loading configuration from {ConfigPath} ...", Path.Combine(FileSystem.Current.AppDataDirectory, "config.json"));
-            Globals.Configuration = new(new(Path.Combine(FileSystem.Current.AppDataDirectory, "config.json")));
+            string confPath = Path.Combine(FileSystem.Current.AppDataDirectory, "config.json");
+
+            this.LogConfigurationInfo(confPath);
+            Globals.Configuration = new(new(confPath));
             await Globals.Configuration.LoadAsync();
+
             _logger.LogTrace("Configuration loaded");
             this.Message = "Configuration loaded...";
         }
@@ -107,7 +110,7 @@ namespace TheEggOfFortune.ViewModels
         private void LoadScoreService()
         {
             Globals.ScoreService.SetScore(Globals.Configuration.RuntimeConfiguration.TapsLeft);
-            _logger.LogTrace("Config loaded with {Tapsleft} taps left", Globals.Configuration.RuntimeConfiguration.TapsLeft);
+            this.LogScoreInfo(Globals.Configuration.RuntimeConfiguration.TapsLeft);
             this.Message = "Score service initialized...";
         }
 
@@ -134,5 +137,16 @@ namespace TheEggOfFortune.ViewModels
             _logger.LogTrace("Strings loaded from resources");
             this.Message = "Strings loaded...";
         }
+
+        #region Logging
+        [LoggerMessage(Level = LogLevel.Trace, Message = "Loading completed in {ElapsedMilliseconds} ms")]
+        private partial void LogLoadingTime(long elapsedMilliseconds);
+
+        [LoggerMessage(Level = LogLevel.Trace, Message = "Loading configuration from {ConfigPath} ...")]
+        private partial void LogConfigurationInfo(string configPath);
+
+        [LoggerMessage(Level = LogLevel.Trace, Message = "Config loaded with {Tapsleft} taps left")]
+        private partial void LogScoreInfo(int tapsLeft);
+        #endregion
     }
 }
