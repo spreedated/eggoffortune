@@ -28,3 +28,5 @@ AppShell.xaml
          ├── DevScreen.xaml
          └── EndPagePopup.xaml
 ```
+
+![Architecture](img/architecture.png)
