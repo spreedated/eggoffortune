@@ -6,6 +6,8 @@ using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 using System;
 using System.IO;
+using System.Reflection;
+using System.Runtime.Versioning;
 using System.Threading.Tasks;
 using System.Timers;
 using TheEggOfFortune.Logic;
@@ -61,7 +63,10 @@ namespace TheEggOfFortune.ViewModels
                 this.ProgressValue += 0.4d;
 
                 this.LoadScoreService();
-                this.ProgressValue += 0.4d;
+                this.ProgressValue += 0.3d;
+
+                await this.LoadStringsFromResources();
+                this.ProgressValue += 0.2d;
 
                 while (!_timerHit)
                 {
@@ -97,6 +102,30 @@ namespace TheEggOfFortune.ViewModels
             Globals.ScoreService.SetScore(Globals.Configuration.RuntimeConfiguration.TapsLeft);
             _logger.LogTrace("Config loaded with {Tapsleft} taps left", Globals.Configuration.RuntimeConfiguration.TapsLeft);
             this.Message = "Score service initialized...";
+        }
+
+        private async Task LoadStringsFromResources()
+        {
+            //End text
+            Globals.EndText = await Utilities.LoadTextfileAsync("End.txt");
+
+            //Credits text
+            DateTime builddate = neXn.Maui.Utilities.GetBuildDate(typeof(EndPagePopupViewModel).Assembly);
+            Assembly a = this.GetType().Assembly;
+
+            Globals.EndCreditText = string.Format(await Utilities.LoadTextfileAsync("Credits.txt"),
+                a.GetCustomAttribute<TargetFrameworkAttribute>().FrameworkDisplayName,
+                builddate == default ? "N/A" : builddate,
+                a.GetName().Version.ToString());
+
+            //Last words text
+            Globals.LastWords = await Utilities.LoadTextfileAsync("LastWords.txt");
+
+            //License text
+            Globals.License = await Utilities.LoadTextfileAsync("License.txt");
+
+            _logger.LogTrace("Strings loaded from resources");
+            this.Message = "Strings loaded...";
         }
     }
 }

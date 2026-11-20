@@ -30,6 +30,10 @@ namespace TheEggOfFortune.Logic
         public static List<Phrase> PhrasesImpatience { get; } = [];
         public static List<Phrase> PhrasesDoubt { get; } = [];
         public static List<Phrase> PhrasesReflection { get; } = [];
+        public static string EndText { get; set; }
+        public static string EndCreditText { get; set; }
+        public static string LastWords { get; set; }
+        public static string License { get; set; }
         private static readonly SemaphoreSlim _saveGate = new(1, 1);
 
         internal static async Task<bool> SaveConfigurationAsync(bool skipIfBusy = false)
