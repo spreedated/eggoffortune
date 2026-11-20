@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Versioning;
@@ -59,6 +60,8 @@ namespace TheEggOfFortune.ViewModels
                 await Task.Delay(500);
 #endif
 
+                Stopwatch sw = Stopwatch.StartNew();
+
                 await this.LoadConfigurationAsync();
                 this.ProgressValue += 0.4d;
 
@@ -67,6 +70,10 @@ namespace TheEggOfFortune.ViewModels
 
                 await this.LoadStringsFromResources();
                 this.ProgressValue += 0.2d;
+
+                sw.Stop();
+
+                _logger.LogTrace("Loading completed in {ElapsedMilliseconds} ms", sw.ElapsedMilliseconds);
 
                 while (!_timerHit)
                 {
@@ -82,7 +89,7 @@ namespace TheEggOfFortune.ViewModels
             }
             catch (Exception ex)
             {
-                MauiProgram.Logger.LogError(ex, "Application initialization failed");
+                _logger.LogError(ex, "Application initialization failed");
                 this.IsProgressVisible = false;
                 this.Message = "Unable to start. Please restart the app.";
             }
