@@ -79,7 +79,7 @@
 		<PackageReference Include="neXn.Maui" Version="11.0.1" />
 		<PackageReference Include="Plugin.MAUI.TouchTracking" Version="0.1.0" />
 		<PackageReference Include="Serilog" Version="4.4.0" />
-		<PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
+		<PackageReference Include="Serilog.Extensions.Logging" Version="11.0.0" />
 		<PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
     <PackageReference Include="neXn.Analyzers" Version="10.0.9">
       <PrivateAssets>all</PrivateAssets>
