@@ -1,0 +1,36 @@
+<ContentPage x:Class="TheEggOfFortune.Views.LoadingScreen"
+             xmlns:vm="clr-namespace:TheEggOfFortune.ViewModels"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
+             Shell.FlyoutItemIsVisible="False"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.BindingContext>
+        <vm:LoadingScreenViewModel/>
+    </ContentPage.BindingContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackLayout Grid.Row="0" VerticalOptions="End" Margin="0,0,0,24">
+            <Image Source="icon.png" MaximumHeightRequest="192"/>
+            <Label Text="The Egg of Fortune" VerticalOptions="End" HorizontalOptions="Center" Style="{StaticResource LoadingScreenTitleText}" FontSize="48"/>
+        </StackLayout>
+        
+        <StackLayout Grid.Row="1" Orientation="Vertical" Margin="0,0,0,32">
+            <Label Text="A Game by" HorizontalOptions="Center" FontSize="24"/>
+            <Label Text="Dante Wackermann" HorizontalOptions="Center" FontSize="24"/>
+        </StackLayout>
+
+        <StackLayout Grid.Row="2" Orientation="Vertical" Spacing="8">
+            <Label Text="{Binding Message}" VerticalOptions="Start" HorizontalOptions="Center" FontSize="20"/>
+            <Border StrokeThickness="2" Stroke="Gray" MaximumWidthRequest="160" HeightRequest="32" Padding="4">
+                <ProgressBar Progress="{Binding ProgressValue}" HeightRequest="32" ProgressColor="White" IsVisible="{Binding IsProgressVisible}"/>
+            </Border>
+        </StackLayout>
+    </Grid>
+</ContentPage>

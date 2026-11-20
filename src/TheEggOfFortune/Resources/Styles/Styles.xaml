@@ -58,4 +58,10 @@
         <Setter Property="HorizontalOptions" Value="Fill"/>
     </Style>
 
+    <Style x:Key="LoadingScreenTitleText" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource White}"/>
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="Padding" Value="8"/>
+    </Style>
+
 </ResourceDictionary>

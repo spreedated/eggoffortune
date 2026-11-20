@@ -3,20 +3,32 @@ using FluentIcons.Maui;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls.Hosting;
 using Microsoft.Maui.Hosting;
-using Microsoft.Maui.Storage;
 using Serilog;
 using Serilog.Events;
-using System.IO;
-using TheEggOfFortune.Logic;
 
 namespace TheEggOfFortune
 {
     public static class MauiProgram
     {
         public static Microsoft.Extensions.Logging.ILogger Logger { get; private set; }
+
+        private static void SetupSerilog()
+        {
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .MinimumLevel.Is(LogEventLevel.Verbose)
+                .WriteTo.Debug()
+                .CreateLogger();
+
+            Logger = new LoggerFactory().AddSerilog().CreateLogger("App");
+        }
+
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+
+            SetupSerilog();
+
             builder
                 .UseMauiApp<App>()
                 .UseFluentIcons()
@@ -27,19 +39,7 @@ namespace TheEggOfFortune
                     fonts.AddFont("AgencyFB-Bold.ttf", "Agency");
                 });
 
-#if DEBUG
-            builder.Logging.AddDebug();
-#endif
-
-            Log.Logger = new LoggerConfiguration()
-                .Enrich.FromLogContext()
-                .MinimumLevel.Is(LogEventLevel.Verbose)
-                .WriteTo.Debug()
-                .CreateLogger();
-
-            Logger = new LoggerFactory().AddSerilog().CreateLogger("App");
-
-            Globals.Configuration = new(new(Path.Combine(FileSystem.Current.AppDataDirectory, "config.json")));
+            builder.Logging.AddSerilog();
 
             return builder.Build();
         }
