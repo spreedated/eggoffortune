@@ -1,0 +1,30 @@
+﻿Thank you for playing!
+The Egg of Fortune
+
+2024-2026 (c) Dante Wackermann
+
+Concept & Design:
+Dante Wackermann
+
+Development:
+Dante Wackermann
+
+Philosophy:
+Dante Wackermann
+
+Testing:
+Dante Wackermann
+
+Special Thanks:
+To my sanity, the only thing that has not left me.
+
+---
+
+Built against
+
+{0}
+{1}
+
+Application Version {2}
+
+---

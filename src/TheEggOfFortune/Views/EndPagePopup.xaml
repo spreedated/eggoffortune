@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:TheEggOfFortune.ViewModels"
+             xmlns:vel="clr-namespace:neXn.Maui.ViewElements;assembly=neXn.Maui"
+             xmlns:local="clr-namespace:TheEggOfFortune.Views"
+             x:Class="TheEggOfFortune.Views.EndPagePopup"
+             CanBeDismissedByTappingOutsideOfPopup="True">
+
+    <local:EndPagePopup.BindingContext>
+        <vm:EndPagePopupViewModel/>
+    </local:EndPagePopup.BindingContext>
+
+    <ScrollView Style="{StaticResource EndtextScrollView}">
+        <Grid Margin="16,8,16,24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Text="{Binding EndText}" Style="{StaticResource EndTextPopup}" HorizontalTextAlignment="Center" Margin="0,24,0,12"/>
+            <Image Grid.Row="1" Source="maui.png"/>
+            <Label Grid.Row="2" Text="{Binding EndTextCredits}" Style="{StaticResource EndTextPopup}" HorizontalTextAlignment="Center" Margin="0,12,0,12"/>
+            <Label Grid.Row="3" Text="{Binding LastWords}" Style="{StaticResource EndTextPopup}" HorizontalTextAlignment="Center" Margin="0,12,0,24" />
+            <vel:ButtonDoubleConfirm Grid.Row="4" Text="Restart journey" Command="{Binding ResetButtonCommand}" MinimumWidthRequest="120" FontSize="32" Margin="0,8,0,0" WarningTimeout="1.8" />
+            <vel:ButtonDoubleConfirm Grid.Row="5" Text="Close" Command="{Binding CloseButtonCommand}" MinimumWidthRequest="120" FontSize="32" Margin="0,8,0,0" WarningAppendixAndSuffix="!" />
+        </Grid>
+    </ScrollView>
+</toolkit:Popup>

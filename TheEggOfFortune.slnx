@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/docs-dev/">
+    <File Path="docs-dev/Startup-Architecture.md" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="LICENSE.txt" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="src/LogicLayer/LogicLayer.csproj" />
+  <Project Path="src/TheEggOfFortune/TheEggOfFortune.csproj">
+    <Deploy />
+  </Project>
+  <Project Path="tests/UnitTests/UnitTests.csproj" />
+</Solution>
