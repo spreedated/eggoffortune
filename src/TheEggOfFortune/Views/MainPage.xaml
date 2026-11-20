@@ -64,7 +64,7 @@
             </Image.Behaviors>
         </Image>
 
-        <Grid Grid.Row="1" VerticalOptions="End" Margin="24,0,24,96">
+        <Grid Grid.Row="2" VerticalOptions="End" Margin="24,0,24,96">
             <Button Text="?" Command="{Binding QuestionButtonCommand}" WidthRequest="80" IsVisible="{Binding ShowEndElements}"/>
         </Grid>
 

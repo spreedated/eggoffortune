@@ -94,6 +94,38 @@ namespace TheEggOfFortune.ViewModels
             });
         }
 
+        private static List<Phrase> DeterminePhraseList()
+        {
+            List<Phrase> selectedPhraseCategory = null;
+
+            if (Globals.ScoreService.Score <= 20000 && Globals.ScoreService.Score >= 19000)
+            {
+                selectedPhraseCategory = Globals.PhrasesInitial;
+            }
+
+            if (Globals.ScoreService.Score <= 18999 && Globals.ScoreService.Score >= 12000)
+            {
+                selectedPhraseCategory = Globals.PhrasesRoutine;
+            }
+
+            if (Globals.ScoreService.Score <= 11999 && Globals.ScoreService.Score >= 6000)
+            {
+                selectedPhraseCategory = Globals.PhrasesImpatience;
+            }
+
+            if (Globals.ScoreService.Score <= 5999 && Globals.ScoreService.Score >= 2000)
+            {
+                selectedPhraseCategory = Globals.PhrasesDoubt;
+            }
+
+            if (Globals.ScoreService.Score <= 1999)
+            {
+                selectedPhraseCategory = Globals.PhrasesReflection;
+            }
+
+            return selectedPhraseCategory;
+        }
+
         private void DetermineDisplayWiseText()
         {
             if (Globals.ScoreService.Score == 20000)
@@ -113,34 +145,7 @@ namespace TheEggOfFortune.ViewModels
 
             if (Globals.ScoreService.Score % 100 == 0)
             {
-                List<Phrase> selectedPhraseCategory = null;
-
-                if (Globals.ScoreService.Score <= 20000 && Globals.ScoreService.Score >= 19000)
-                {
-                    selectedPhraseCategory = Globals.PhrasesInitial;
-                }
-
-                if (Globals.ScoreService.Score <= 18999 && Globals.ScoreService.Score >= 12000)
-                {
-                    selectedPhraseCategory = Globals.PhrasesRoutine;
-                }
-
-                if (Globals.ScoreService.Score <= 11999 && Globals.ScoreService.Score >= 6000)
-                {
-                    selectedPhraseCategory = Globals.PhrasesImpatience;
-                }
-
-                if (Globals.ScoreService.Score <= 5999 && Globals.ScoreService.Score >= 2000)
-                {
-                    selectedPhraseCategory = Globals.PhrasesDoubt;
-                }
-
-                if (Globals.ScoreService.Score <= 1999)
-                {
-                    selectedPhraseCategory = Globals.PhrasesReflection;
-                }
-
-                this.WiseText = LogicLayer.Utilities.GetRandomPhrase(selectedPhraseCategory);
+                this.WiseText = LogicLayer.Utilities.GetRandomPhrase(DeterminePhraseList());
 
                 this.WiseTextOpacity = 1;
                 _wiseWordTimer.Start();

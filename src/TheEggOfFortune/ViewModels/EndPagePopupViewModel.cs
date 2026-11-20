@@ -5,7 +5,6 @@ using System;
 using System.Reflection;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
-using System.Timers;
 using TheEggOfFortune.Logic;
 
 namespace TheEggOfFortune.ViewModels

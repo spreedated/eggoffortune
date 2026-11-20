@@ -1,10 +1,9 @@
-﻿using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Shapes;
+﻿using Microsoft.Maui.Controls;
 using Microsoft.Maui.Devices;
 using Microsoft.Maui.Graphics;
 using System.Threading.Tasks;
 using TheEggOfFortune.Logic;
+using TheEggOfFortune.ViewEffects;
 using TheEggOfFortune.ViewModels;
 using TouchTracking;
 
@@ -27,38 +26,6 @@ namespace TheEggOfFortune.Views
 #endif
         }
 
-        private async Task ShowHitMarkerAsync(Point position)
-        {
-            const double size = 28;
-            const uint duration = 180;
-
-            Ellipse ring = new()
-            {
-                WidthRequest = size,
-                HeightRequest = size,
-                StrokeThickness = 2,
-                Fill = Brush.Transparent,
-                InputTransparent = true,
-                Scale = 0.5,
-                Opacity = 0.9
-            };
-
-            ring.SetAppTheme<Brush>(Shape.StrokeProperty, Brush.Black, Brush.White);
-
-            AbsoluteLayout.SetLayoutBounds(ring, new Rect(position.X - size / 2, position.Y - size / 2, size, size));
-
-            HitMarkerLayer.Children.Add(ring);
-
-            try
-            {
-                await Task.WhenAll(ring.ScaleToAsync(1.5, duration, Easing.CubicOut), ring.FadeToAsync(0, duration, Easing.CubicIn));
-            }
-            finally
-            {
-                HitMarkerLayer.Children.Remove(ring);
-            }
-        }
-
         private async void TouchTrackingBehavior_TouchAction(object sender, TouchActionEventArgs e)
         {
             if (e.Type != TouchActionType.Pressed)
@@ -74,8 +41,7 @@ namespace TheEggOfFortune.Views
 
             //Hitmarker
             var position = new Point(EggImage.X + EggImage.TranslationX + e.Location.X - HitMarkerLayer.X, EggImage.Y + EggImage.TranslationY + e.Location.Y - HitMarkerLayer.Y);
-
-            Task markerAnimation = ShowHitMarkerAsync(position);
+            Task markerAnimation = HitMarker.ShowHitMarkerAsync(HitMarkerLayer, position);
 
             if (HapticFeedback.Default.IsSupported)
             {
@@ -88,7 +54,9 @@ namespace TheEggOfFortune.Views
             await markerAnimation;
         }
 
+#pragma warning disable S2325
         private void TouchTrackingBehavior_TouchActionCounter(object sender, TouchActionEventArgs e)
+#pragma warning restore S2325
         {
             if (e.Type != TouchActionType.Pressed)
             {
